@@ -1,4 +1,5 @@
 import React from 'react';
+import SignupForm from '../components/signup/signupform';
 
 export default class HomeLayout extends React.Component {
   render() {
@@ -11,7 +12,7 @@ export default class HomeLayout extends React.Component {
                       features
                   </div>
                   <div className="col-md-5 col-md-offset-1">
-                      signup
+                      <SignupForm />
                   </div>
               </div>
           </div>
