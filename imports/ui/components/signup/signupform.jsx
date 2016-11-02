@@ -1,6 +1,49 @@
 import React from 'react';
+import {FlowRouter} from 'meteor/kadira:flow-router';
 
 export default class SignupForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: '',
+      messageClass: ''
+    }
+  }
+  getMeteorData() {
+    let data = {};
+    data.currentUser = Meteor.user();
+    return data;
+  }
+  displayError(message) {
+    this.setState({message, messageClass: 'alert alert-danger registerError'})
+  }
+  handleSubmit() {
+    e.preventDefault();
+    this.setState({message: '', messageClass: 'hidden'});
+    var that = this;
+    var first_name = ReactDOM.findDOMNode(this.refs.first_name).value.trim();
+    var last_name = ReactDOM.findDOMNode(this.refs.last_name).value.trim();
+    var email = ReactDOM.findDOMNode(this.refs.email).value.trim();
+    var password = ReactDOM.findDOMNode(this.refs.password).value.trim();
+    var user = {
+        email,
+        password,
+        profile: {
+            fullname: (first_name + last_name).toLowerCase(),
+            firstname: first_name,
+            lastname: last_name,
+            avatar: 'http://placehold.it/150x150',
+            friends: []
+        }
+    };
+    Accounts.createUser(user, function (e) {
+        if (e) {
+            that.displayError(e.reason);
+        } else {
+            FlowRouter.go('/dashboard');
+        }
+    })
+  }
   render() {
     return (
         <div className="row">
@@ -8,7 +51,7 @@ export default class SignupForm extends React.Component {
                 <h1>Sign Up</h1>
                 <p className="text-muted">It's free and always will be.</p>
             </div>
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <div className="col-sm-9">
                     <div className="row">
                         <div className="col-sm-6 form-group">
@@ -29,6 +72,7 @@ export default class SignupForm extends React.Component {
                          className="form-control"/>
                     </div>
                     <button type="submit" className="btn btn-md btn-success">Sign Up</button>
+                    <span className={this.state.messageClass}>{this.state.message}</span>
                 </div>
             </form>
         </div>
