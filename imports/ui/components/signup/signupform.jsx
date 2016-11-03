@@ -9,6 +9,7 @@ export default class SignupForm extends React.Component {
       message: '',
       messageClass: ''
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   getMeteorData() {
     let data = {};
@@ -53,7 +54,7 @@ export default class SignupForm extends React.Component {
                 <h1>Sign Up</h1>
                 <p className="text-muted">It's free and always will be.</p>
             </div>
-            <form onSubmit={this.handleSubmit.bind(this)}>
+            <form onSubmit={this.handleSubmit}>
                 <div className="col-sm-9">
                     <div className="row">
                         <div className="col-sm-6 form-group">
