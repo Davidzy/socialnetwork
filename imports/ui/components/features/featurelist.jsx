@@ -37,7 +37,7 @@ export default class FeatureList extends React.Component {
         </li>
       )
     });
-    
+
     return (
       <div>
         <h2 className="col-md-11 featurelist hidden-xs">

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 
 export default class SignupForm extends React.Component {
@@ -17,7 +18,7 @@ export default class SignupForm extends React.Component {
   displayError(message) {
     this.setState({message, messageClass: 'alert alert-danger registerError'})
   }
-  handleSubmit() {
+  handleSubmit(e) {
     e.preventDefault();
     this.setState({message: '', messageClass: 'hidden'});
     var that = this;
@@ -36,9 +37,10 @@ export default class SignupForm extends React.Component {
             friends: []
         }
     };
-    Accounts.createUser(user, function (e) {
-        if (e) {
-            that.displayError(e.reason);
+    // console.log(user);
+    Accounts.createUser(user, function (err) {
+        if (err) {
+            that.displayError(err.reason);
         } else {
             FlowRouter.go('/dashboard');
         }
@@ -51,7 +53,7 @@ export default class SignupForm extends React.Component {
                 <h1>Sign Up</h1>
                 <p className="text-muted">It's free and always will be.</p>
             </div>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit.bind(this)}>
                 <div className="col-sm-9">
                     <div className="row">
                         <div className="col-sm-6 form-group">
