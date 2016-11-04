@@ -5,6 +5,8 @@ import { mount } from 'react-mounter';
 // layouts and pages
 import HomeLayout from '../../ui/layouts/homelayout';
 import Layout from '../../ui/layouts/layout';
+import Sidebar from '../../ui/components/sidebar/sidebar';
+import Main from '../../ui/components/main/main';
 
 publicRoutes = FlowRouter.group({
     name: 'publicroute'
@@ -22,8 +24,8 @@ privateRoutes.route('/dashboard', {
   name: 'Dashboard',
   action: function () {
     mount(Layout, {
-      sidebar: <div>sidebar</div>,
-      content: <div>content</div>,
+      sidebar: <Sidebar />,
+      content: <Main />,
     })
   }
 });

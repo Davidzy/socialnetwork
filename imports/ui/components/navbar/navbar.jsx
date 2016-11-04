@@ -32,7 +32,7 @@ export default class Navbar extends React.Component {
           <ul className="nav navbar-nav navbar-right">
             <li className="dropdown">
               <a data-toggle="dropdown" href="#" className="dropdown-toggle">
-                <i className="fa fa-user">David Yu</i>
+                <i className="fa fa-user"></i>Bill Gates
               </a>
               <ul className="dropdown-menu">
                 <li><a href="/profile">Edit Profile</a></li>
