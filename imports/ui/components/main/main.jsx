@@ -1,5 +1,6 @@
 import React from 'react';
 import StatusForm from './statusform';
+import Post from '../post/post';
 
 export default class Main extends React.Component{
   render() {
@@ -10,8 +11,11 @@ export default class Main extends React.Component{
             <div className="row">
               <div className="col-sm-9">
                 <StatusForm />
-                Posts
+                <Post />
                 <button className="btn btn-md">More</button>
+              </div>
+              <div className="col-sm-3">
+                Ads
               </div>
             </div>
           </div>
