@@ -1,40 +1,88 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Meteor } from 'meteor/meteor';
+import Images from '../../../api/images';
 
 export default class StatusForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        image:'',
+        imageId:'',
         filename:''
+      };
+    this.uploadFile = this.uploadFile.bind(this);
+  }
+  submitForm(e) {
+    e.preventDefault();
+    var that = this;
+    var message = this.sharing.value;
+    // var imageurl = Images.findOne({_id: this.imagepath.value}).link();
+        // Meteor.call('Posts.insert',message,imageurl,function(err){
+        //     if(err){
+        //         console.log(err);
+        //     }
+        // });
+        console.log(message);
+        console.log(this.imagepath);
+        // that.setState({
+        //   filename:'',
+        //   imageId: ''
+        // });
+        // ReactDOM.findDOMNode(this.refs.sharing).value = "";
+  }
+  uploadFile(e) {
+    e.preventDefault();
+    let self = this;
+    if (e.currentTarget.files && e.currentTarget.files[0]) {
+      var file = e.currentTarget.files[0];
+      if (file) {
+        console.log(file);
+        var uploadInstance = Images.insert({
+          file: file,
+          streams: 'dynamic',
+          chunkSize: 'dynamic'
+        }, false);
+      // self.setState({
+      //   filename: file.name
+      // });
+      uploadInstance.on('uploaded', function (error, fileObj) {
+        self.setState({
+          imageId: fileObj._id,
+          filename: fileObj.name
+        });
+      });
+      uploadInstance.start();
       }
+    }
   }
   render() {
+    console.log(this.state.props);
     return (
       <div className="panel panel-default">
         <div className="panel-cotent">
           <div className="panel-heading">
             Update Status
           </div>
-          <form className="form center-block">
-            <input type="hidden" ref="imageid" value={this.state.image}/>
+          <form onSubmit={this.submitForm} className="form center-block">
+            <input type="hidden" ref={(input) => this.imagepath = input} value={this.state.imageId}/>
             <div className="panel-body">
               <div className="form-group">
-                <textarea ref="sharing"
+                <textarea ref={(input) => this.sharing = input}
                           id="sharing"
                           className="form-control input-lg"
                           placeholder="What do you want to share?">
                 </textarea>
-                <h3>{this.state.filename || ''}</h3>
               </div>
+              <h3>{this.state.filename || ''}</h3>
+            </div>
               <div className="panel-footer">
                 <div>
                   <ul className="pull-left list-inline">
-                    <li><input ref="file" className='filepicker' id="file" type="file"/></li>
+                    <li><input ref="file" className='filepicker' onChange={this.uploadFile} type="file"/></li>
                   </ul>
-                  <button className="btn btn-primary btn-sm postbutton">Post</button>
+                  <button type="submit" className="btn btn-primary btn-sm postbutton">Post</button>
                 </div>
               </div>
-            </div>
           </form>
         </div>
       </div>
