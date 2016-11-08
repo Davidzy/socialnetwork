@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-import Images from '../../../api/images';
+// import { Images } from '../../../api/images';
 
 export default class StatusForm extends React.Component {
   constructor(props) {
@@ -11,24 +11,30 @@ export default class StatusForm extends React.Component {
         filename:''
       };
     this.uploadFile = this.uploadFile.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
   submitForm(e) {
     e.preventDefault();
     var that = this;
-    var message = this.sharing.value;
-    // var imageurl = Images.findOne({_id: this.imagepath.value}).link();
-        // Meteor.call('Posts.insert',message,imageurl,function(err){
-        //     if(err){
-        //         console.log(err);
-        //     }
-        // });
-        console.log(message);
-        console.log(this.imagepath);
-        // that.setState({
-        //   filename:'',
-        //   imageId: ''
-        // });
-        // ReactDOM.findDOMNode(this.refs.sharing).value = "";
+    let message = this.sharing.value;
+    let imageid =  this.imagepath.value;
+    var imageurl = '';
+    if (imageid !== '') {
+      imageurl = Images.findOne({_id: imageid}).link();
+    }
+    Meteor.call('Posts.insert',message,imageid, imageurl,function(err){
+        if(err){
+            console.log(err);
+        }
+    });
+      // console.log(message);
+      // console.log(imageurl);
+    that.setState({
+      filename:'',
+      imageId: ''
+    });
+    this.sharing.value = "";
+    this.imagepath.value = "";
   }
   uploadFile(e) {
     e.preventDefault();
@@ -36,7 +42,6 @@ export default class StatusForm extends React.Component {
     if (e.currentTarget.files && e.currentTarget.files[0]) {
       var file = e.currentTarget.files[0];
       if (file) {
-        console.log(file);
         var uploadInstance = Images.insert({
           file: file,
           streams: 'dynamic',
@@ -45,6 +50,9 @@ export default class StatusForm extends React.Component {
       // self.setState({
       //   filename: file.name
       // });
+      uploadInstance.on('start', function () {
+        // console.log('Starting');
+      });
       uploadInstance.on('uploaded', function (error, fileObj) {
         self.setState({
           imageId: fileObj._id,
@@ -56,7 +64,6 @@ export default class StatusForm extends React.Component {
     }
   }
   render() {
-    console.log(this.state.props);
     return (
       <div className="panel panel-default">
         <div className="panel-cotent">
@@ -78,7 +85,7 @@ export default class StatusForm extends React.Component {
               <div className="panel-footer">
                 <div>
                   <ul className="pull-left list-inline">
-                    <li><input ref="file" className='filepicker' onChange={this.uploadFile} type="file"/></li>
+                    <li><input className='filepicker' onChange={this.uploadFile} type="file"/></li>
                   </ul>
                   <button type="submit" className="btn btn-primary btn-sm postbutton">Post</button>
                 </div>
