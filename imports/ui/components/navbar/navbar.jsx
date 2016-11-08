@@ -1,7 +1,14 @@
 import React from 'react';
 
 export default class Navbar extends React.Component {
+  // componentDidMount() {
+  //
+  // }
   render() {
+    let fullname = '';
+    if (this.props.currentUser && this.props.currentUser.profile) {
+      fullname = this.props.currentUser.profile.firstname + ' ' + this.props.currentUser.profile.lastname;
+    }
     return (
       <div className="navbar navbar-blue navbar-fixed-top">
         <div className="navbar-header">
@@ -32,7 +39,7 @@ export default class Navbar extends React.Component {
           <ul className="nav navbar-nav navbar-right">
             <li className="dropdown">
               <a data-toggle="dropdown" href="#" className="dropdown-toggle">
-                <i className="fa fa-user"></i>Bill Gates
+                <i className="fa fa-user"></i>{fullname}
               </a>
               <ul className="dropdown-menu">
                 <li><a href="/profile">Edit Profile</a></li>

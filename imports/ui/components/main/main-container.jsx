@@ -5,10 +5,6 @@ import { Posts } from '../../../api/posts';
 import { DBAds } from '../../../api/ads';
 
 export default MainContainer = createContainer(() => {
-  // const images = Images.find().fetch();
-  // return {
-  //   images
-  // };
   let data = {};
   data.posts = [];
   data.ads = [];

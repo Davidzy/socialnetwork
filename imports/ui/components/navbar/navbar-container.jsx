@@ -1,9 +1,9 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data'
-import SignupForm from './signupform';
+import Navbar from './navbar';
 
 export default createContainer(() => {
   let data = {};
   data.currentUser = Meteor.user();
   return data;
-}, SignupForm);
+}, Navbar);
