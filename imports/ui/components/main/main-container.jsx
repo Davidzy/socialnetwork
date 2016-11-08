@@ -1,6 +1,8 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data'
 import Main from './main';
+import { Posts } from '../../../api/posts';
+import { DBAds } from '../../../api/ads';
 
 export default MainContainer = createContainer(() => {
   // const images = Images.find().fetch();

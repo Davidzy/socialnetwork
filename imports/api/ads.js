@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 
-export default const DBAds = new Mongo.Collection('ads');
+export const DBAds = new Mongo.Collection('ads');
 DBAds.allow({
     insert:function(){
         return true;

@@ -11,6 +11,8 @@ export default class Main extends React.Component{
       title: 'Some Company',
       image: 'http://placehold.it/150x150'
     };
+    let posts = this.props.posts.map(record => <Post key={record._id} post={record}/>);
+    console.log(this.props);
     return (
       <div className="col-sm-9 col-sm-11" id="main">
         <div>
@@ -18,7 +20,7 @@ export default class Main extends React.Component{
             <div className="row">
               <div className="col-sm-9">
                 <StatusForm />
-                <Post />
+                {posts}
                 <button className="btn btn-md">More</button>
               </div>
               <div className="col-sm-3">

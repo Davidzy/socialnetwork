@@ -2,15 +2,17 @@ import React from 'react';
 
 export default class Post extends React.Component {
   render() {
-    var dimage = '';
-    dimage = (
-      <div>
-        <div className="panel-thunbnail">
-          <img src="http://placehold.it/150x150"
-               className="image-responsive postimage img-thumbnail"/>
+    let dimage = '';
+    if (this.props.post.imageurl) {
+      dimage = (
+        <div>
+          <div className="panel-thunbnail">
+            <img src={this.props.post.imageurl}
+              className="image-responsive postimage img-thumbnail"/>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
 
     return (
       <div className="col-sm-12">
@@ -28,7 +30,7 @@ export default class Post extends React.Component {
             </div>
           </div>
           <div className="col-md-12 post-description">
-            <h3>Hello World!</h3>
+            <h3>{this.props.post.message}</h3>
             <br/>
           </div>
           <div className="col-md-12">
