@@ -7,6 +7,8 @@ import { Meteor } from 'meteor/meteor';
 import HomeLayout from '../../ui/layouts/homelayout';
 import Layout from '../../ui/layouts/layout';
 import Sidebar from '../../ui/components/sidebar/sidebar';
+import ProfileContainer from '../../ui/components/profile/profile-container';
+// import Profile from '../../ui/components/profile/profile';
 import MainContainer from '../../ui/components/main/main-container';
 
 publicRoutes = FlowRouter.group({
@@ -31,7 +33,7 @@ privateRoutes.route('/dashboard', {
   action: function () {
     mount(Layout, {
       sidebar: <Sidebar />,
-    content: <MainContainer />,
+      content: <MainContainer />,
     })
   }
 });
@@ -39,5 +41,14 @@ publicRoutes.route('/signout', {
   name: 'Signout',
   action: function() {
     Meteor.logout( () => FlowRouter.go('/'));
+  }
+});
+privateRoutes.route('/profile', {
+  name: 'Profile',
+  action: function() {
+    mount(Layout, {
+      sidebar: <Sidebar />,
+    content: <ProfileContainer />
+    })
   }
 });
