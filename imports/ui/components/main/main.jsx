@@ -12,7 +12,6 @@ export default class Main extends React.Component{
       image: 'http://placehold.it/150x150'
     };
     let posts = this.props.posts.map(record => <Post key={record._id} post={record}/>);
-    console.log(this.props);
     return (
       <div className="col-sm-9 col-sm-11" id="main">
         <div>

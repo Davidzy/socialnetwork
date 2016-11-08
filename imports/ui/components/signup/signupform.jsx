@@ -7,15 +7,15 @@ export default class SignupForm extends React.Component {
     super(props);
     this.state = {
       message: '',
-      messageClass: ''
+      messageClass: 'hidden'
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  getMeteorData() {
-    let data = {};
-    data.currentUser = Meteor.user();
-    return data;
-  }
+  // getMeteorData() {
+  //   let data = {};
+  //   data.currentUser = Meteor.user();
+  //   return data;
+  // }
   displayError(message) {
     this.setState({message, messageClass: 'alert alert-danger registerError'})
   }

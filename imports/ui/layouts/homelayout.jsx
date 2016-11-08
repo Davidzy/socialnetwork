@@ -1,5 +1,6 @@
 import React from 'react';
-import SignupForm from '../components/signup/signupform';
+// import SignupForm from '../components/signup/signupform';
+import SignupFormContainer from '../components/signup/signupform-container';
 import Header from '../components/header/header';
 import FeatureList from '../components/features/featurelist';
 
@@ -14,7 +15,7 @@ export default class HomeLayout extends React.Component {
                       <FeatureList />
                   </div>
                   <div className="col-md-5 col-md-offset-1">
-                      <SignupForm />
+                      <SignupFormContainer />
                   </div>
               </div>
           </div>
