@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Posts } from './posts';
 import { Comments } from './comments';
+import { DBMessage } from './messages';
+import { DBFriends } from './friends';
 
 Meteor.methods({
   'changeAvatar'(user, fileid) {
@@ -25,24 +27,27 @@ Meteor.methods({
     };
     Posts.insert(post);
   },
-  'Post.remove':function(id){
+  'Post.remove'(id) {
     Posts.remove(id);
   },
-
+  'Message.remove'(id) {
+    DBMessage.remove(id)
+  },
   'addComment': function (message, post) {
     var user = this.userId;
     var date = new Date();
     var comment = {message: message, post: post._id, user: user, createdOn: date};
     Comments.insert(comment)
   },
-  'sendMessage':function(person,subject,message){
+  'sendMessage':function(person, subject, message, friendREQ){
     var to = Meteor.users.findOne({_id: person});
     var from = Meteor.users.findOne({_id: this.userId});
     var msg = {
-      to:to,
+      to,
       fromuser:from._id,
       title:subject,
-      message:message,
+      message,
+      friendREQ,
       createdOn:new Date()
     };
     console.log(msg);
@@ -56,10 +61,11 @@ Meteor.methods({
     var from = Meteor.users.findOne({_id: this.userId});
     var to = Meteor.users.findOne({_id: friendid});
     var message = {
-      to: to,
+      to,
       fromuser: from._id,
       title: from.profile.firstname + ' ' + from.profile.lastname + ' wants to be your friend.',
-      message: message
+      message,
+      friendREQ: true,
     };
     console.log(friendid, this.userId);
     if (friendid == this.userId) {
