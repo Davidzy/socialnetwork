@@ -9,4 +9,7 @@ Meteor.methods({
       let data = file._id;
       Meteor.users.update(this.userId, {$set: {'profile.avatar': data}});
   },
+  'changeEmail': function(email) {
+    Meteor.users.update(this.userId,{$set:{'emails.0.address':email}});
+  },
 })

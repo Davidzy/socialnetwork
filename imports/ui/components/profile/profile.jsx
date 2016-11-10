@@ -7,8 +7,21 @@ export default class Post extends React.Component {
     super(props);
     this.state = {
       klass:'img-circle img-responsive custom-input-file',
+      editmode:false,
+      email:this.props && this.props.currentUser && this.props.currentUser.emails ? this.props.currentUser.emails[0].address:'you@yourdomain.com'
     };
     this.uploadFile = this.uploadFile.bind(this);
+    this.changeEmail = this.changeEmail.bind(this);
+    this.toggleEdit = this.toggleEdit.bind(this);
+  }
+  toggleEdit() {
+    this.setState({editmode: !this.state.editmode, email:this.props.currentUser ? Meteor.user().emails[0].address:''});
+  }
+  changeEmail(e) {
+    e.preventDefault();
+    Meteor.call('changeEmail', e.target.value);
+    this.toggleEdit();
+    this.setState({email: e.target.value});
   }
   componentDidMount() {
     this.setState({email:this.props.currentUser ? Meteor.user().emails[0].address:''});
@@ -39,6 +52,17 @@ export default class Post extends React.Component {
     }
   }
   render() {
+    let editmode = <input onBlur={this.changeEmail}
+                      type="text"
+                      ref="email"
+                      defaultValue={this.state.email}
+                    />;
+    let emaillink = this.props.currentUser && this.props.currentUser.emails ? 'mailto:' + this.props.currentUser.emails[0].address:'';
+    let mailblock = !this.state.editmode ? <a href={emaillink}>{this.state.email}</a>:editmode;
+    let fullname = 'Bill Gates (default username)';
+    if (this.props.currentUser && this.props.currentUser.profile) {
+      fullname = this.props.currentUser.profile.firstname + ' ' + this.props.currentUser.profile.lastname;
+    }
     return (
       <div className="row">
         <div className="col-md-2 hidden-xs">
@@ -53,11 +77,12 @@ export default class Post extends React.Component {
             </div>
         </div>
         <div className="col-md-9 col-xs-9">
-          <h2>Bill Gates</h2>
+          <h2>{fullname}</h2>
           <table className="table table-user-information">
             <tbody>
               <tr>
-                <td>Email</td>
+                <td onClick={this.toggleEdit}>Email</td>
+                <td>{mailblock}</td>
               </tr>
             </tbody>
           </table>
