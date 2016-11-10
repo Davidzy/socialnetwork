@@ -1,8 +1,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import AvatarContainer from '../avatar/avatar-container';
+import { createContainer } from 'meteor/react-meteor-data'
+import Avatar from '../avatar/avatar';
 
-export default class Post extends React.Component {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,7 +67,7 @@ export default class Post extends React.Component {
     return (
       <div className="row">
         <div className="col-md-2 hidden-xs">
-          <AvatarContainer user={this.props.currentUser ? this.props.currentUser._id: ''} klass={this.state.klass} />
+          <Avatar user={this.props.currentUser ? this.props.currentUser._id: ''} klass={this.state.klass} />
             <div>
               <label>
                 <div className="inputWrapper">
@@ -91,3 +92,9 @@ export default class Post extends React.Component {
     )
   }
 }
+
+export default createContainer(() => {
+  let data = {};
+  data.currentUser = Meteor.user();
+  return data;
+}, Profile);

@@ -1,6 +1,8 @@
 import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import Avatar from '../avatar/avatar';
 
-export default class Post extends React.Component {
+class Post extends React.Component {
   render() {
     let dimage = '';
     if (this.props.post.imageurl) {
@@ -19,7 +21,7 @@ export default class Post extends React.Component {
         <div className="panel panel-white post panel-shadow">
           <div className="post-heading">
             <div className="pull-left image">
-              <img className="img-circle avatar" src="http://placehold.it/48x48"/>
+              <Avatar klass="img-circle avatar" user={this.props.post.user._id}/>
             </div>
             <div className="pull-left meta">
               <div className="title h5">
@@ -51,3 +53,7 @@ export default class Post extends React.Component {
     )
   }
 }
+
+export default createContainer( () => {
+  return {};//blank object
+}, Post);

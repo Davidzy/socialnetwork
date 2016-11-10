@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createContainer } from 'meteor/react-meteor-data';
 import {FlowRouter} from 'meteor/kadira:flow-router';
 
-export default class SignupForm extends React.Component {
+class SignupForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,3 +83,9 @@ export default class SignupForm extends React.Component {
     )
   }
 }
+
+export default createContainer( () => {
+  return {
+    currentUser: Meteor.user()
+  }
+}, SignupForm);

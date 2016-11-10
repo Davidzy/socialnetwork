@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-// import { Images } from '../../../api/images';
 
 export default class StatusForm extends React.Component {
   constructor(props) {
@@ -22,13 +21,11 @@ export default class StatusForm extends React.Component {
     if (imageid !== '') {
       imageurl = Images.findOne({_id: imageid}).link();
     }
-    Meteor.call('Posts.insert',message,imageid, imageurl,function(err){
+    Meteor.call('Posts.insert', message, imageurl, function(err){
         if(err){
             console.log(err);
         }
     });
-      // console.log(message);
-      // console.log(imageurl);
     that.setState({
       filename:'',
       imageId: ''
@@ -47,9 +44,6 @@ export default class StatusForm extends React.Component {
           streams: 'dynamic',
           chunkSize: 'dynamic'
         }, false);
-      // self.setState({
-      //   filename: file.name
-      // });
       uploadInstance.on('start', function () {
         // console.log('Starting');
       });

@@ -1,6 +1,8 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data'
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
   // componentDidMount() {
   //
   // }
@@ -52,3 +54,9 @@ export default class Navbar extends React.Component {
     )
   }
 }
+
+export default createContainer( () => {
+  return {
+    currentUser: Meteor.user()
+  };
+}, Navbar);

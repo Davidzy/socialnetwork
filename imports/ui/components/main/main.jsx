@@ -1,9 +1,12 @@
 import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data'
+import { Posts } from '../../../api/posts';
+import { DBAds } from '../../../api/ads';
 import StatusForm from './statusform';
 import Post from '../post/post';
 import Ad from '../ad/ad';
 
-export default class Main extends React.Component{
+class Main extends React.Component{
   render() {
     var adobj = {
       _id: 1,
@@ -32,3 +35,12 @@ export default class Main extends React.Component{
     )
   }
 }
+
+export default createContainer(() => {
+  let data = {};
+  data.posts = [];
+  data.ads = [];
+  data.posts = Posts.find({}, {sort: {createdAt: -1}}).fetch();
+  data.ads = DBAds.find({}, {}).fetch();
+  return data;
+}, Main);

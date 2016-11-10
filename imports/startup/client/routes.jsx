@@ -7,9 +7,9 @@ import { Meteor } from 'meteor/meteor';
 import HomeLayout from '../../ui/layouts/homelayout';
 import Layout from '../../ui/layouts/layout';
 import Sidebar from '../../ui/components/sidebar/sidebar';
-import ProfileContainer from '../../ui/components/profile/profile-container';
+import Profile from '../../ui/components/profile/profile';
 // import Profile from '../../ui/components/profile/profile';
-import MainContainer from '../../ui/components/main/main-container';
+import Main from '../../ui/components/main/main';
 
 publicRoutes = FlowRouter.group({
     name: 'publicroute'
@@ -33,7 +33,7 @@ privateRoutes.route('/dashboard', {
   action: function () {
     mount(Layout, {
       sidebar: <Sidebar />,
-      content: <MainContainer />,
+      content: <Main />,
     })
   }
 });
@@ -48,7 +48,7 @@ privateRoutes.route('/profile', {
   action: function() {
     mount(Layout, {
       sidebar: <Sidebar />,
-    content: <ProfileContainer />
+      content: <Profile />
     })
   }
 });

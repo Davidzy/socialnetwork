@@ -15,18 +15,3 @@ Posts.allow({
         return true;
     }
 });
-
-Meteor.methods({
-  'Posts.insert'(message, imageid, imageurl) {
-    var post = {
-      user: Meteor.user(),
-      createdAt: new Date(),
-      image: imageid,
-      imageurl,
-      message,
-      likes: [],
-      comments: []
-    };
-    Posts.insert(post);
-  }
-});

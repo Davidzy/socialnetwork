@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-export default class Header extends React.Component {
+class Header extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -67,3 +68,9 @@ export default class Header extends React.Component {
     )
   }
 }
+
+export default createContainer(() => {
+  return {
+    currentUser: Meteor.user()
+  }
+}, Header);

@@ -1,6 +1,7 @@
 import React from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 
-export default class Avatar extends React.Component {
+class Avatar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,3 +19,14 @@ export default class Avatar extends React.Component {
       )
   }
 }
+
+export default createContainer(({user}) => {
+  let data = {};
+  // let userhandle = Meteor.subscribe('userlist', this.props.user);
+  // let imagehandle = Meteor.subscribe('imagelist',this.props.user);
+  data.usr = Meteor.users.findOne({_id: user});
+  if (data.usr) {
+    data.img = Images.findOne({_id: data.usr.profile.avatar});
+  }
+  return data;
+}, Avatar);
