@@ -10,6 +10,10 @@ import Sidebar from '../../ui/components/sidebar/sidebar';
 import Profile from '../../ui/components/profile/profile';
 // import Profile from '../../ui/components/profile/profile';
 import Main from '../../ui/components/main/main';
+import Home from '../../ui/components/userhome/home'
+import FriendsList from '../../ui/components/friends/friendslist'
+import Messages from '../../ui/components/messages/message'
+
 
 publicRoutes = FlowRouter.group({
     name: 'publicroute'
@@ -51,4 +55,31 @@ privateRoutes.route('/profile', {
       content: <Profile />
     })
   }
+});
+publicRoutes.route('/user/:fullname', {
+    name: 'UserHome',
+    action: function (params) {
+      mount(Layout, {
+        sidebar: <Sidebar />,
+        content: params.fullname ? <Home fullname={params.fullname}/> : 'No User Found'
+      })
+    }
+});
+publicRoutes.route('/friends', {
+    name: 'UserHome',
+    action: function (params) {
+      mount(Layout, {
+        sidebar: <Sidebar />,
+        content: <FriendsList />
+      })
+    }
+});
+privateRoutes.route('/messages', {
+    name: 'Messages',
+    action: function (params) {
+      mount(Layout, {
+        sidebar: <Sidebar />,
+        content: <Messages />
+      })
+    }
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import Avatar from '../avatar/avatar';
+import Fullname from '../user/fullname';
 
 class Post extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Post extends React.Component {
             </div>
             <div className="pull-left meta">
               <div className="title h5">
-                <b>Bill Gates</b>&nbsp;
+                <b><Fullname user={this.props.post.user._id}/></b>&nbsp;
                 made a post
               </div>
               <h6 className="text-muted time">An hour ago</h6>
