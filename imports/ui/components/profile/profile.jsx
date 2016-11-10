@@ -2,6 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { createContainer } from 'meteor/react-meteor-data'
 import Avatar from '../avatar/avatar';
+import Fullname from '../user/fullname';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -60,10 +61,6 @@ class Profile extends React.Component {
                     />;
     let emaillink = this.props.currentUser && this.props.currentUser.emails ? 'mailto:' + this.props.currentUser.emails[0].address:'';
     let mailblock = !this.state.editmode ? <a href={emaillink}>{this.state.email}</a>:editmode;
-    let fullname = 'Bill Gates (default username)';
-    if (this.props.currentUser && this.props.currentUser.profile) {
-      fullname = this.props.currentUser.profile.firstname + ' ' + this.props.currentUser.profile.lastname;
-    }
     return (
       <div className="row">
         <div className="col-md-2 hidden-xs">
@@ -71,14 +68,14 @@ class Profile extends React.Component {
             <div>
               <label>
                 <div className="inputWrapper">
-                  <input id="avatar" name="avatar" onChange={this.uploadFile}
-                         type="file" className="fileInput change-avatar"/>
+                  <input id="avatar" onChange={this.uploadFile}
+                         className="fileInput change-avatar" type="file" name="avatar"/>
                 </div>
               </label>
             </div>
         </div>
         <div className="col-md-9 col-xs-9">
-          <h2>{fullname}</h2>
+          <h2>{this.props.currentUser ? <Fullname user={this.props.currentUser._id}/>: 'Fake User'}</h2>
           <table className="table table-user-information">
             <tbody>
               <tr>
@@ -94,7 +91,5 @@ class Profile extends React.Component {
 }
 
 export default createContainer(() => {
-  let data = {};
-  data.currentUser = Meteor.user();
-  return data;
+  return { currentUser: Meteor.user() }
 }, Profile);
