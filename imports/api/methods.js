@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Posts } from './posts';
+import { Comments } from './comments';
 
 Meteor.methods({
   'changeAvatar'(user, fileid) {
