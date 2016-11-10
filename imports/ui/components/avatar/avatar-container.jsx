@@ -7,9 +7,8 @@ export default createContainer(({user}) => {
   // let userhandle = Meteor.subscribe('userlist', this.props.user);
   // let imagehandle = Meteor.subscribe('imagelist',this.props.user);
   data.usr = Meteor.users.findOne({_id: user});
-  data.img = '';
-  // if (data.usr) {
-  //   data.img = Images.findOne({_id: data.usr.profile.avatar});
-  // }
+  if (data.usr) {
+    data.img = Images.findOne({_id: data.usr.profile.avatar});
+  }
   return data;
 }, Avatar);

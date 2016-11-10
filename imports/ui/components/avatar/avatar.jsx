@@ -9,11 +9,9 @@ export default class Avatar extends React.Component {
   }
 
   render() {
-    // console.log("props", this.props);
-    // console.log("state", this.state);
     let avatar = this.state.avatar;
-    if(this.props.img && this.props.img.url){
-        avatar = this.props.img.url();
+    if(this.props.img && this.props.img.link()){
+        avatar = this.props.img.link();
     }
     return (
         <img className={this.props.klass} src={avatar} alt="Image"/>
