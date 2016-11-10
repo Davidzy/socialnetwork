@@ -1,8 +1,39 @@
 import React from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import Avatar from '../avatar/avatar';
 
 class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.likePost = this.likePost.bind(this);
+  }
+  likePost(e) {
+    e.preventDefault();
+    var user = Meteor.userId();
+    var postid = this.props.post._id;
+    Meteor.call('likePost', user, postid);
+  }
+  renderLikes() {
+    var likes = '';
+    var likesub = 0;
+    var currentUser = String(Meteor.userId());
+    if(this.props.post.likes.indexOf(currentUser) !== -1){
+        likes = 'You and ';
+        likesub = 1;
+    }
+
+    switch (this.props.post.likes.length - likesub) {
+        case 0:
+            return likesub > 0 ? 'You like this':'';
+        case 1:
+            return likesub > 0 ? likes + '1 other person like this':'1 person likes this';
+            break;
+        default:
+            return likes + (this.props.post.likes.length - likesub) + ' people like this';
+            break;
+    }
+  }
   render() {
     let dimage = '';
     if (this.props.post.imageurl) {
@@ -40,10 +71,10 @@ class Post extends React.Component {
             <br/>
           </div>
           <div className="actions">
-            <a href="#" className="btn btn-default stat-item">
+            <a href="#" onClick={this.likePost} className="btn btn-default stat-item">
               <i className="fa fa-thumbs-up icon"></i>
             </a>&nbsp;
-            10 Likes
+            {this.renderLikes()}
           </div>
           <div className="post-footer">
             Comments List
